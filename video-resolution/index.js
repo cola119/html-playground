@@ -38,6 +38,7 @@ const main = async () => {
     console.log("error", err);
   }
 
+  const logEl = document.getElementById("log");
   video.onloadedmetadata = async () => {
     const mediaStream = video.srcObject;
     const track = mediaStream.getVideoTracks()[0];
@@ -46,8 +47,9 @@ const main = async () => {
     for (const width of [896, 1152, 1408, 1664, 1920]) {
       await update(width);
       const constraint = track.getConstraints();
-      alert(`width: ${JSON.stringify(constraint.width)}, height: ${JSON.stringify(constraint.height)}`);
-    alert(`videoWidth: ${video.videoWidth}, videoHeight: ${video.videoHeight}`)
+      logEl.innerText += `constraint: width: ${JSON.stringify(
+        constraint.width
+      )}, height: ${JSON.stringify(constraint.height)}\nvideoWidth: ${video.videoWidth}, videoHeight: ${video.videoHeight}\n\n`;
     }
   };
 };
