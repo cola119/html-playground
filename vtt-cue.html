@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <video src=""></video>
+    <script>
+      const runTest = (test) => {
+        var video = document.createElement("video");
+        var track = document.createElement("track");
+        // assert_true("src" in track, "track not supported");
+        // t.test_id = test.name;
+        // t.url_encoded_input = test.input;
+        // t.expected = expected;
+        var track_blob = new Blob(
+          [
+            "WEBVTT\n\n00:00.000 --> 00:01.000\n",
+            decodeURIComponent(test.input),
+          ],
+          { type: "text/vtt" }
+        );
+        var track_url = URL.createObjectURL(track_blob);
+        console.log(track.track.mode);
+
+        track.src = track_url;
+        // t.add_cleanup(function () {
+        //   URL.revokeObjectURL(track_url);
+        // });
+        track["default"] = true;
+        track.kind = "subtitles";
+        console.log(track.track.mode);
+        track.onload = trackLoaded;
+        track.onerror = trackError;
+        video.appendChild(track);
+        document.body.appendChild(video);
+        console.log(track.track.mode);
+      };
+      const trackLoaded = (e) => {
+        console.log("load", e);
+        var track = e.target;
+        console.log(track, track.track, track.track.cues);
+      };
+      const trackError = (e) => {
+        console.log("error", e);
+      };
+      runTest({
+        name: "aa785adca3fcdfe1884ae840e13c6d294a2414e8",
+        input: "text",
+        expected: "%23document-fragment%0A%7C%20%22text%22",
+      });
+    </script>
+  </body>
+</html>

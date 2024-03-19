@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const error1 = new Error("error1");
+      error1.name = "error1";
+
+      const controller = new AbortController();
+      const signal = controller.signal;
+      const fetchPromise = fetch("data.json", { signal });
+      fetchPromise
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log("error.name", error.name);
+          console.log(error);
+        });
+      controller.abort(error1);
+    </script>
+  </body>
+</html>

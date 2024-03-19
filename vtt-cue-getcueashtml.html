@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var video = document.createElement("video");
+      var t1 = video.addTextTrack("subtitles");
+      document.body.appendChild(video);
+      var c1 = new VTTCue(0, 1, "\0");
+      t1.addCue(c1);
+      const d = c1.getCueAsHTML();
+      console.log(d.childNodes[0].data, 'x\ufffd', d.childNodes[0].data === 'x\ufffd')
+    </script>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var video = document.createElement("video");
+      var track = document.createElement("track");
+      console.log("src" in track, "should true");
+      track.src = "./regions-regionanchor.vtt";
+      track["default"] = true;
+      track.kind = "subtitles";
+      track.onload = trackLoaded;
+      track.onerror = trackError;
+      video.appendChild(track);
+      document.body.appendChild(video);
+
+      function trackLoaded(event) {
+        var track = event.target;
+        var video = track.parentNode;
+        var cues = video.textTracks[0].cues;
+        {
+          console.log(cues.length, "should be equal", 20);
+
+          var regions = Array.from(cues).map(function (cue) {
+            return cue.region;
+          });
+          console.log(regions);
+
+          var valid_anchors = [
+            [0, 100],
+            [0, 0],
+            [1, 1],
+            [100, 0],
+            [0, 100],
+            [100, 100],
+          ];
+          valid_anchors.forEach(function (pair, index) {
+            var anchorX = pair[0];
+            var anchorY = pair[1];
+
+            console.log(
+              index, regions[index].regionAnchorX + " should be equal to " + anchorX
+            );
+            console.log(
+              index, regions[index].regionAnchorY + " should be equal to " + anchorY
+            );
+          });
+
+          console.log("---------------");
+
+          for (var i = 0; i < 14; i++) {
+            var index = valid_anchors.length + i;
+
+            console.log(
+              index,
+              regions[index].regionAnchorX,
+              "should be equal to",
+              0
+            );
+            console.log(
+              index,
+              regions[index].regionAnchorY,
+              "should be equal to",
+              100
+            );
+          }
+        }
+      }
+
+      function trackError(e) {
+        console.error("got unexpected error event");
+      }
+    </script>
+  </body>
+</html>

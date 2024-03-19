@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="log"></div>
+    <script>
+      const logEl = document.getElementById("log");
+
+      navigator.serviceWorker.register("sw.js").then(() => {
+        console.log("registered");
+
+        navigator.serviceWorker.ready.then(async (registration) => {
+          console.log("seend");
+          registration.active.postMessage("Hi service worker");
+
+          logEl.innerHTML = `${typeof registration.backgroundFetch}`
+
+          const fechRes = await registration.backgroundFetch.fetch("id", [
+            "resources/feature-name.txt",
+            "resources/feature-name.txt",
+            "resources/feature-name.txt?id=3",
+            new Request("resources/feature-name.txt", { method: "PUT" }),
+            "/common/slow.py",
+          ]);
+          logEl.innerHTML = "fetch done"
+
+          const matchedRecords = await fechRes.matchAll(
+            "resources/feature-name.txt"
+          );
+          logEl.innerHTML = "match"
+
+          console.log(matchedRecords.length, "should be 3");
+        });
+      });
+
+      navigator.serviceWorker.addEventListener("message", (event) => {
+        console.log(`The service worker sent me a message: ${event.data}`);
+        logEl.innerHTML += `<p>${event.data}</p>`;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="log"></div>
+    <script>
+      const logEl = document.getElementById("log");
+
+      navigator.serviceWorker.register("sw.js").then(() => {
+        console.log("registered");
+        navigator.serviceWorker.ready.then(async (registration) => {
+          console.log("ready");
+
+          registration.active.postMessage("Hi service worker");
+        });
+      });
+
+      navigator.serviceWorker.addEventListener("message", (event) => {
+        console.log(`The service worker sent me a message: ${event.data}`);
+        logEl.innerHTML += `<p>${event.data}</p>`;
+
+      });
+    </script>
+  </body>
+</html>

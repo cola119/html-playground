@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var video = document.createElement("video");
+      var track = document.createElement("track");
+      track.src = "support/arrows.vtt";
+      track["default"] = true;
+      track.kind = "subtitles";
+      track.onload = trackLoaded
+      track.onerror = trackError
+      video.appendChild(track);
+      document.body.appendChild(video);
+
+      function trackLoaded(event) {
+        var track = event.target;
+        var video = track.parentNode;
+        var cues = video.textTracks[0].cues;
+        {
+          console.log(cues.length, 6);
+
+          for (var i = 0; i < cues.length; i++) {
+            console.log(cues[i].id, "");
+            console.log(cues[i].text, "text" + i);
+          }
+        }
+      }
+
+      function trackError(e) {
+        console.log("got unexpected error event");
+      }
+    </script>
+  </body>
+</html>

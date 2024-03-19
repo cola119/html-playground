@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="a_btn">a tag</button>
+    <button id="abbr_btn">abbr tag</button>
+    <script>
+      document.getElementById("a_btn").onclick = () => {
+        const klass = class extends HTMLAnchorElement {}
+        customElements.define("my-a", klass, { extends: "a" });
+        let customized = new klass();
+        console.log('done');
+      };
+      document.getElementById("abbr_btn").onclick = () => {
+        const klass = eval(`(class extends HTMLElement {})`);
+        customElements.define("my-abbr", klass, { extends: "abbr" });
+        let customized = new klass();
+        console.log('done');
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var region = new VTTRegion();
+      region.scroll = "invalid-scroll-value";
+      console.log(region.scroll, "", "should be equal");
+
+      checkValues([-1, 101], "IndexSizeError");
+      checkValues([-Infinity, Infinity, NaN], TypeError);
+
+      function assert_throws_something(error, func) {
+        if (typeof error == "string") {
+          console.log(error, "assert_throws_dom(error, func)");;
+        } else {
+          console.log(error, "assert_throws_js(error, func)");
+        }
+      }
+
+      function checkValues(invalidValues, exception) {
+        for (var value of invalidValues) {
+          assert_throws_something(exception, function () {
+            region.viewportAnchorX = value;
+          });
+          console.log(region.viewportAnchorX, 0, "should be equal");
+          assert_throws_something(exception, function () {
+            region.viewportAnchorY = value;
+          });
+          console.log(region.viewportAnchorY, 100, "should be equal");
+          assert_throws_something(exception, function () {
+            region.regionAnchorX = value;
+          });
+          console.log(region.regionAnchorX, 0, "should be equal");
+          assert_throws_something(exception, function () {
+            region.regionAnchorY = value;
+          });
+          console.log(region.regionAnchorY, 100, "should be equal");
+          assert_throws_something(exception, function () {
+            region.width = value;
+          });
+          console.log(region.width, 100, "should be equal");
+        }
+      }
+
+      console.log(region.lines, 3, "should be equal");
+
+      region.lines = 130;
+      console.log(region.lines, 130, "should be equal");
+      region.viewportAnchorX = 64;
+      console.log(region.viewportAnchorX, 64, "should be equal");
+      region.viewportAnchorY = 32;
+      console.log(region.viewportAnchorY, 32, "should be equal");
+      region.regionAnchorX = 16;
+      console.log(region.regionAnchorX, 16, "should be equal");
+      region.regionAnchorY = 8;
+      console.log(region.regionAnchorY, 8, "should be equal");
+      region.width = 42;
+      console.log(region.width, 42, "should be equal");
+    </script>
+  </body>
+</html>

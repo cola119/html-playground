@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">try</button>
+    <script>
+      function parse(xmlString) {
+        return new DOMParser().parseFromString(xmlString, "text/xml")
+          .documentElement;
+      }
+      function serialize(node) {
+        return n(node);
+      }
+      const test = () => {
+        var root = parse(
+          '<root xmlns="urn:bar"><outer xmlns=""><inner>value1</inner></outer></root>'
+        );
+        const actual = serialize(root);
+        const expected =
+          '<root xmlns="urn:bar"><outer xmlns=""><inner>value1</inner></outer></root>';
+        console.log({ actual, expected, result: actual === expected });
+      };
+      document.getElementById("btn").addEventListener("click", () => {
+        test();
+      });
+      /**
+       * specどこ？ 
+       * "<root xmlns=\"urn:bar\"><outer xmlns=\"\"><inner>value1</inner></outer></root>"
+       * "<root xmlns=\"urn:bar\"><outer xmlns=\"\"><inner xmlns=\"\">value1</inner></outer></root>"
+       * "<root xmlns=\"urn:bar\"><outer xmlns=\"\"><inner>value1</inner></outer></root>"
+        */
+    </script>
+  </body>
+</html>

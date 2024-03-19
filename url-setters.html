@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">try</button>
+    <script>
+      const test = (href, attr, new_value) => {
+        const url = document.createElement("a");
+        url.href = href;
+        url[attr] = new_value;
+        console.log(url.href);
+        console.log(url.protocol);
+      };
+      document.getElementById("btn").addEventListener("click", () => {
+        // test("ssh://me@example.net", "protocol", "http");  // FAIL: expected ssh://me@example.net ssh:, but http:
+        test("ssh://me@example.net", "protocol", "file");  // PASS: ssh://me@example.net ssh:
+      });
+    </script>
+  </body>
+</html>

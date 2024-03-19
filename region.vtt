@@ -1,0 +1,11 @@
+WEBVTT
+
+NOTE No API for accessing region ids, so using lines to uniquely identify regions
+
+REGION
+id:foo
+
+lines:333
+
+00:00:00.000 --> 00:00:01.000 region:foo
+valid

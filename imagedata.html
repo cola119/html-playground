@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <input type="text" name="data" id="data" /> -->
+    <textarea name="data" id="data" cols="30" rows="10"></textarea>
+    <canvas id="canvas"></canvas>
+    <button id="btn">render</button>
+    <script>
+      document.getElementById("btn").addEventListener("click", () => {
+        const data = JSON.parse(document.getElementById("data").value);
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = 716;
+        canvas.height = 716;
+        const imageData = new ImageData(
+          new Uint8ClampedArray(Object.values(data)),
+          canvas.width,
+          canvas.height
+        );
+        ctx.putImageData(imageData, 0, 0);
+      });
+    </script>
+  </body>
+</html>

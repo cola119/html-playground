@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="main">
+        hogehoge
+        <br>
+        fooaa
+    </div>
+    <script>
+        let lastTouchStartTime = 0;
+        document.getElementById("main").addEventListener("touchstart", function(e){
+            if (lastTouchStartTime === 0) {
+                lastTouchStartTime = e.timeStamp;
+                console.log('start');
+            }
+        }, {passive: false, capture: true})
+        document.getElementById("main").addEventListener("touchmove", function(e){
+        }, {passive: false, capture: true})
+        document.getElementById("main").addEventListener("touchend", function(e){
+            const diff = e.timeStamp - lastTouchStartTime
+            console.log(diff);
+            if (diff < 700) {
+                console.log('true');
+                e.preventDefault();
+            } else {
+                console.log('false');
+            }
+            lastTouchStartTime = 0;
+        }, {passive: false, capture: true})
+    </script>
+</body>
+</html>

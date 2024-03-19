@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="cue_btn">oncuechange</button>
+    <button id="dbclick_btn">ondblclick</button>
+    <script>
+      document.getElementById("cue_btn").onclick = () => {
+        const el = document.createElement("div");
+        el.setAttribute("oncuechange", "console.log('called')");
+        const compiledHandler = el["oncuechange"];
+        console.log(typeof compiledHandler);
+        compiledHandler();
+      };
+      document.getElementById("dbclick_btn").onclick = () => {
+        const el = document.createElement("div");
+        el.setAttribute("ondblclick", "console.log('called')");
+        const compiledHandler = el["ondblclick"];
+        console.log(typeof compiledHandler);
+        compiledHandler();
+      };
+    </script>
+  </body>
+</html>

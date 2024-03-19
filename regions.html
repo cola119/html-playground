@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var test_file = "./region.vtt";
+      var video = document.createElement("video");
+      var track = document.createElement("track");
+      track.src = test_file;
+      track["default"] = true;
+      track.kind = "subtitles";
+      track.onload = trackLoaded;
+      track.onerror = trackError;
+      video.appendChild(track);
+      document.body.appendChild(video);
+
+      function trackLoaded(e) {
+        const track = e.target.track
+        console.log(track.cues);
+      }
+
+      function trackError(e) {
+        console.log("error", e);
+      }
+    </script>
+  </body>
+</html>

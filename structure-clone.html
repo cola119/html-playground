@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="proto_btn">proto</button>
+    <button id="obj_btn">object</button>
+    <script>
+      document.getElementById("proto_btn").onclick = () => {
+        const o = Object.prototype;
+        const newProto = { some: "proto" };
+        const copy = structuredClone(o);
+        Object.setPrototypeOf(copy, newProto);
+        console.log(Object.getPrototypeOf(o), Object.getPrototypeOf(copy));
+      };
+      document.getElementById("obj_btn").onclick = () => {
+        const o = { hoge: "foo" };
+        const copy = structuredClone(o);
+        console.log(o, copy);
+      };
+    </script>
+  </body>
+</html>

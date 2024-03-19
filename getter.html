@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script>
+      const container = document.querySelector("#container");
+      container.innerHTML = "<div style='white-space:pre'>abc\ndef";
+      var e = container.firstChild;
+      while (e && e.nodeType != Node.ELEMENT_NODE) {
+        e = e.nextSibling;
+      }
+      console.log(e.innerText, "abc\ndef", e.innerText === "abc\ndef");
+      console.log(e.outerText, "abc\ndef", e.outerText === "abc\ndef");
+    </script>
+  </body>
+</html>

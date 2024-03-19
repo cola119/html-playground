@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const trackLoaded = (e) => {
+        const track = e.target;
+        const cue = track.track.cues[0];
+        const frag = cue.getCueAsHTML();
+        console.log(frag, frag.textContent);
+      };
+
+      const test = {
+        name: "f1869f6e2853635eec81cc3afa3e2b8148ccbdc0",
+        input: "%26amp",
+        expected: "%23document-fragment%0A%7C%20%22%26%22",
+      };
+      const video = document.createElement("video");
+      const track = document.createElement("track");
+      const track_blob = new Blob(
+        ["WEBVTT\n\n00:00.000 --> 00:01.000\n", decodeURIComponent(test.input)],
+        { type: "text/vtt" }
+      );
+      track.src = URL.createObjectURL(track_blob);
+      track["default"] = true;
+      track.kind = "subtitles";
+      track.onload = trackLoaded;
+      video.appendChild(track);
+      document.body.appendChild(video);
+    </script>
+  </body>
+</html>

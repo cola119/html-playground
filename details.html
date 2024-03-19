@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script>
+      let container = document.getElementById("container");
+      container.innerHTML = `
+        <details name="a">
+        <summary>1</summary>
+        This is the first item.
+        </details>
+
+        <details name="a">
+        <summary>2</summary>
+        This is the second item.
+        </details>
+    `;
+      let first = container.firstElementChild;
+      let second = first.nextElementSibling;
+      console.log(first.open, second.open, "should false, false");
+
+      first.open = true;
+      console.log(first.open, second.open, "should true, false");
+
+      second.open = true;
+      console.log(first.open, second.open, "should false, true");
+
+      second.open = true;
+      console.log(first.open, second.open, "should false, true");
+
+      second.open = false;
+      console.log(first.open, second.open, "should false, false");
+    </script>
+  </body>
+</html>

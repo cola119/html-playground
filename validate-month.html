@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="month_btn">month</button>
+    <button id="date_btn">data</button>
+    <script>
+      document.getElementById("month_btn").onclick = () => {
+        var ele = document.createElement("input");
+        ele.type = "month";
+        ele.max = "2000-01";
+        ele.value = "2001-01";
+        var res = ele.checkValidity();
+        console.log(res);
+      };
+      document.getElementById("date_btn").onclick = () => {
+        var ele = document.createElement("input");
+        ele.type = "date";
+        ele.max = "2000-01-01";
+        ele.value = "2001-01-01";
+        var res = ele.checkValidity();
+        console.log(res);
+      };
+    </script>
+  </body>
+</html>

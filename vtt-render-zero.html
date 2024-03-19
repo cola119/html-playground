@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <video
+      src="./test.ogm"
+      height="100"
+      width="1000"
+    ></video>
+    <script>
+      function animationFrame() {
+        return new Promise((resolve) => {
+          requestAnimationFrame(resolve);
+        });
+      }
+      const test = async () => {
+        let v = document.querySelector("video");
+        let track = v.addTextTrack("subtitles", "label", "en");
+        track.mode = "showing";
+        track.addCue(new VTTCue(1, 60, "First subtitle"));
+        v.currentTime = 3;
+        await new Promise((resolve) => {
+          v.addEventListener("seeked", resolve, { once: true });
+        });
+        await animationFrame();
+        await animationFrame();
+        console.log('done');
+      };
+    //   test()
+    </script>
+  </body>
+</html>

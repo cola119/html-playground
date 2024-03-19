@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("btn").onclick = () => {
+          const res = Object.getOwnPropertyNames(document);
+          console.log(res);
+        };
+      });
+    </script>
+  </head>
+  <body>
+    <div id="exposed_div_with_id">
+      <div id="not_exposed_div_with_id"></div>
+    </div>
+    <button id="btn">do</button>
+  </body>
+</html>

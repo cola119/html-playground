@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function make_vtt_track(contents, test) {
+        var track_blob = new Blob([contents], { type: "text/vtt" });
+        var track_url = URL.createObjectURL(track_blob);
+        return track_url;
+      }
+      // {A,0},{B,1},{C,2},{D,3},{E,4}
+      //              ^
+      // index: 2 will be erased
+      // {A,0},{B,1},{D,3},{E,4}
+      // invalid_index: 2
+      // insert {C,2} at the last
+      // {A,0},{B,1},{D,3},{E,4},{C,2}
+      window.video = document.createElement("video");
+      window.t1 = video.addTextTrack("subtitles");
+      document.body.appendChild(video);
+      var t = document.createElement("track");
+      t.onload = function () {
+        for (const cue of t.track.cues) {
+          console.log(cue.line, cue.snapToLines, cue.id, cue.positionAlign);
+        }
+console.log('--');
+        t.track.cues[2].snapToLines = false;
+
+        for (const cue of t.track.cues) {
+          console.log(cue.line, cue.snapToLines, cue.id);
+        }
+      };
+      t.src = make_vtt_track('WEBVTT\n\n'+
+                            '0\n00:00:00.000 --> 00:00:00.001\ntest\n\n'+
+                            '1\n00:00:00.000 --> 00:00:00.001\ntest\n\n'+
+                            '2\n00:00:00.000 --> 00:00:00.001\ntest\n\n'+
+                            '3\n00:00:00.000 --> 00:00:00.001\ntest', this);
+      t.track.mode = "showing";
+      video.appendChild(t);
+    </script>
+  </body>
+</html>

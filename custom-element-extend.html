@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      // Create a class for the element
+      class WordCount extends HTMLElement {
+        constructor() {
+          // Always call super first in constructor
+          super();
+        }
+
+        connectedCallback() {
+          // count words in element's parent element
+          const wcParent = this.parentNode;
+
+          function countWords(node) {
+            const text = node.innerText || node.textContent;
+            return text
+              .trim()
+              .split(/\s+/g)
+              .filter((a) => a.trim().length > 0).length;
+          }
+
+          const count = `Words: ${countWords(wcParent)}`;
+
+          // Create a shadow root
+          const shadow = this.attachShadow({ mode: "open" });
+
+          // Create text node and add word count to it
+          const text = document.createElement("span");
+          text.textContent = count;
+
+          // Append it to the shadow root
+          shadow.appendChild(text);
+
+          // Update count when element content changes
+          setInterval(function () {
+            const count = `Words: ${countWords(wcParent)}`;
+            text.textContent = count;
+          }, 200);
+        }
+      }
+
+      // Define the new element
+      customElements.define("word-count", WordCount);
+    </script>
+  </head>
+  <body>
+    <article contenteditable="">
+      <h2>Sample heading</h2>
+
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc pulvinar
+        sed justo sed viverra. Aliquam ac scelerisque tellus. Vivamus porttitor
+        nunc vel nibh rutrum hendrerit. Donec viverra vestibulum pretium. Mauris
+        at eros vitae ante pellentesque bibendum. Etiam et blandit purus, nec
+        aliquam libero. Etiam leo felis, pulvinar et diam id, sagittis pulvinar
+        diam. Nunc pellentesque rutrum sapien, sed faucibus urna sodales in. Sed
+        tortor nisl, egestas nec egestas luctus, faucibus vitae purus. Ut elit
+        nunc, pretium eget fermentum id, accumsan et velit. Sed mattis velit
+        diam, a elementum nunc facilisis sit amet.
+      </p>
+
+      <p is="word-count"></p>
+    </article>
+    <hr />
+    <article contenteditable="">
+      <h2>Sample heading</h2>
+
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc pulvinar
+        sed justo sed viverra. Aliquam ac scelerisque tellus. Vivamus porttitor
+        nunc vel nibh rutrum hendrerit. Donec viverra vestibulum pretium. Mauris
+        at eros vitae ante pellentesque bibendum. Etiam et blandit purus, nec
+        aliquam libero. Etiam leo felis, pulvinar et diam id, sagittis pulvinar
+        diam. Nunc pellentesque rutrum sapien, sed faucibus urna sodales in. Sed
+        tortor nisl, egestas nec egestas luctus, faucibus vitae purus. Ut elit
+        nunc, pretium eget fermentum id, accumsan et velit. Sed mattis velit
+        diam, a elementum nunc facilisis sit amet.
+      </p>
+
+      <word-count></word-count>
+    </article>
+  </body>
+</html>

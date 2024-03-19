@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function make_vtt_track(contents, test) {
+        var track_blob = new Blob([contents], { type: "text/vtt" });
+        var track_url = URL.createObjectURL(track_blob);
+        return track_url;
+      }
+
+      window.video = document.createElement("video");
+      window.t1 = video.addTextTrack("subtitles");
+      document.body.appendChild(video);
+      var t = document.createElement("track");
+      t.onload = function () {
+        var c1 = t.track.cues[0];
+
+        for (const cue of t.track.cues) {
+          console.log(cue.line);
+        }
+
+        console.log(c1.snapToLines, "should be true");
+        c1.line = 101;
+
+        for (const cue of t.track.cues) {
+          console.log(cue.line);
+        }
+
+        c1.snapToLines = false;
+        console.log(c1.snapToLines, "should be false");
+        c1.snapToLines = true;
+        console.log(c1.snapToLines, "should be true");
+        c1.line = -1;
+        c1.snapToLines = false;
+        console.log(c1.snapToLines, "should be false");
+        c1.snapToLines = true;
+        console.log(c1.snapToLines, "should be true");
+        c1.line = 0;
+        c1.snapToLines = false;
+        console.log(c1.snapToLines, "should be false");
+        console.log('---');
+        var c2 = t.track.cues[1];
+        console.log(c2.snapToLines, "should be true"); //
+        c2.line = 101;
+        c2.snapToLines = false;
+        console.log(c2.snapToLines, "should be false");
+        c2.snapToLines = true;
+        console.log(c2.snapToLines, "should be true");
+        c2.line = -1;
+        c2.snapToLines = false;
+        console.log(c2.snapToLines, "should be false");
+        c2.snapToLines = true;
+        console.log(c2.snapToLines, "should be true");
+        c2.line = 0;
+        c2.snapToLines = false;
+        console.log(c2.snapToLines, "should be false");
+      };
+      t.src = make_vtt_track('WEBVTT\n\n00:00:00.000 --> 00:00:00.001\ntest\n\n'+
+                           '00:00:00.000 --> 00:00:00.001 line:0\ntest\n\n'+
+                           '00:00:00.000 --> 00:00:00.001 line:0%\ntest', this);
+    //   t.src = make_vtt_track(
+    //     "WEBVTT\n\n00:00:00.000 --> 00:00:00.001\ntest\n\n" +
+    //       "00:00:00.000 --> 00:00:00.001\ntest\n\n" +
+    //       "00:00:00.000 --> 00:00:00.001\ntest\n\n" +
+    //       "00:00:00.000 --> 00:00:00.001\ntest\n\n" +
+    //       "00:00:00.000 --> 00:00:00.001\ntest\n\n" +
+    //       "00:00:00.000 --> 00:00:00.001\ntest",
+    //     this
+    //   );
+      t.track.mode = "showing";
+      video.appendChild(t);
+    </script>
+  </body>
+</html>
