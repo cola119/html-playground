@@ -45,11 +45,12 @@ const main = async () => {
     video.play();
 
     for (const width of [896, 1152, 1408, 1664, 1920]) {
-      await update(width);
-      const constraint = track.getConstraints();
-      logEl.innerText += `constraint: width: ${JSON.stringify(
-        constraint.width
-      )}, height: ${JSON.stringify(constraint.height)}\nvideoWidth: ${video.videoWidth}, videoHeight: ${video.videoHeight}\n\n`;
+        await new Promise((resolve) => setTimeout(resolve, 4000));
+        await update(width);
+      const settings = track.getSettings();
+      logEl.innerText += `Setting: width: ${JSON.stringify(
+        settings.width
+      )}, height: ${JSON.stringify(settings.height)}\nvideoWidth: ${video.videoWidth}, videoHeight: ${video.videoHeight}\n\n`;
     }
   };
 };
